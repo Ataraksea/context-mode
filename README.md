@@ -1025,6 +1025,43 @@ Full configs: [`configs/omp/mcp.json`](configs/omp/mcp.json) | [`configs/omp/SYS
 </details>
 
 <details>
+<summary><strong>Hermes Agent</strong> — plugin + MCP</summary>
+
+**Prerequisites:** Node.js 18+, Hermes Agent installed.
+
+context-mode integrates with Hermes Agent via a native plugin (`.hermes-plugin/`) and MCP server support.
+
+**Install:**
+
+1. Install the Hermes plugin:
+
+   ```bash
+   cp -r .hermes-plugin ~/.hermes/plugins/hermes-context-mode
+   ```
+
+2. Enable in config:
+
+   ```bash
+   hermes config set plugins.enabled.0 hermes-context-mode
+   ```
+
+3. (Optional) Add MCP server for full ctx_execute/ctx_search support:
+
+   ```bash
+   hermes mcp add context-mode -- npx -y context-mode
+   ```
+
+4. Restart gateway:
+
+   ```bash
+   hermes gateway restart
+   ```
+
+**Routing:** Automatic via plugin hooks (`pre_tool_call` + `pre_llm_call`). See [`configs/hermes/AGENTS.md`](configs/hermes/AGENTS.md).
+
+</details>
+
+<details>
 <summary><strong>Build Prerequisites</strong> <sup>(CentOS, RHEL, Alpine)</sup></summary>
 
 Context Mode uses [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) on Node.js, which ships prebuilt native binaries for most platforms. On glibc >= 2.31 systems (Ubuntu 20.04+, Debian 11+, Fedora 34+, macOS, Windows), `npm install` works without any build tools.
